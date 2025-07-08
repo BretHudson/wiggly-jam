@@ -1,4 +1,6 @@
+import { Input, Keys } from 'canvas-lord/core/input';
 import { Scene } from 'canvas-lord/core/scene';
+import { Vec2 } from 'canvas-lord/math';
 import { Random } from 'canvas-lord/util/random';
 import type { IEntitySystem } from 'canvas-lord/util/types';
 
@@ -24,6 +26,8 @@ export class WiggleScene extends Scene {
 		this.componentSystemMap.set(enemyPullerComp, [
 			enemyPullerSystem as IEntitySystem,
 		]);
+
+		this.backgroundColor = '#333';
 	}
 
 	get cursorPos() {
@@ -32,6 +36,12 @@ export class WiggleScene extends Scene {
 	}
 
 	begin(): void {
+		const halfSize = new Vec2(
+			this.engine.halfWidth,
+			this.engine.halfHeight,
+		);
+		this.camera = this.camera.sub(halfSize);
+
 		const wiggle = new Wiggle();
 		this.addEntity(wiggle);
 
@@ -39,5 +49,11 @@ export class WiggleScene extends Scene {
 		const e = Enemy.createPuller();
 
 		this.addEntity(e);
+	}
+
+	update(input: Input) {
+		if (input.keyPressed(Keys.Escape)) {
+			this.engine.popScenes();
+		}
 	}
 }
