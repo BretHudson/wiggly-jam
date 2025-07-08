@@ -7,10 +7,12 @@ const game = new Game('game', {
 	backgroundColor: '#323232',
 });
 
-if (false as boolean) {
-	const scene = new WiggleScene();
-	game.pushScene(scene);
-} else {
-	game.pushScene(new MenuScene());
+const menu = new MenuScene();
+game.pushScene(menu);
+
+if (true as boolean) {
+	menu.onBegin.add(() => {
+		game.pushScene(new WiggleScene());
+	});
 }
 game.start();
