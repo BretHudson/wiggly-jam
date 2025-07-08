@@ -5,12 +5,12 @@ const game = new Game('game', {
     fps: 60,
     backgroundColor: '#323232',
 });
-if (false) {
-    const scene = new WiggleScene();
-    game.pushScene(scene);
-}
-else {
-    game.pushScene(new MenuScene());
+const menu = new MenuScene();
+game.pushScene(menu);
+if (true) {
+    menu.onBegin.add(() => {
+        game.pushScene(new WiggleScene());
+    });
 }
 game.start();
 //# sourceMappingURL=index.js.map
