@@ -21,16 +21,24 @@ export class WiggleScene extends Scene {
         const { pos } = this.engine.input.mouse;
         return pos.add(this.camera);
     }
-    begin() {
+    init() {
         const halfSize = new Vec2(this.engine.halfWidth, this.engine.halfHeight);
         this.camera = this.camera.sub(halfSize);
         const wiggle = new Wiggle();
         this.addEntity(wiggle);
-        // const e = Enemy.createPusher();
-        const e = Enemy.createPuller();
-        this.addEntity(e);
     }
     update(input) {
+        let e = undefined;
+        if (input.keyPressed(Keys.Digit1)) {
+            e = Enemy.createPusher;
+        }
+        if (input.keyPressed(Keys.Digit2)) {
+            e = Enemy.createPuller;
+        }
+        if (e) {
+            const { x, y } = this.cursorPos;
+            this.addEntities(e(x, y));
+        }
         if (input.keyPressed(Keys.Escape)) {
             this.engine.popScenes();
         }
