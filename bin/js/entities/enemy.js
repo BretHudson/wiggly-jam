@@ -20,20 +20,20 @@ export class Enemy extends WiggleSceneEntity {
     get graphic() {
         return super.graphic;
     }
-    static createType(c) {
-        const e = new Enemy();
+    static createType(c, x, y, color) {
+        const e = new Enemy(x, y, color);
         const comp = e.addComponent(c);
         e.speed = comp.speed;
         return e;
     }
-    static createPusher() {
-        return this.createType(enemyPusherComp);
+    static createPusher(x, y) {
+        return Enemy.createType(enemyPusherComp, x, y, '#AA4A44');
     }
-    static createPuller() {
-        return this.createType(enemyPullerComp);
+    static createPuller(x, y) {
+        return Enemy.createType(enemyPullerComp, x, y, 'blue');
     }
-    constructor(x, y) {
-        const gfx = Sprite.createRect(32, 32, 'white');
+    constructor(x, y, color) {
+        const gfx = Sprite.createRect(32, 32, color);
         gfx.centerOO();
         super(x, y, gfx);
     }

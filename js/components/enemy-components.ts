@@ -17,7 +17,7 @@ export const enemyPusherComp = Components.createComponent({
 export const enemyPusherSystem: EnemySystem = {
 	update: (entity, input) => {
 		const comp = entity.component(enemyPusherComp)!;
-		entity.graphic.color = entity.ready ? 'red' : 'white';
+		entity.graphic.color = entity.ready ? 'red' : undefined;
 	},
 };
 
@@ -30,6 +30,6 @@ export type EnemyComponent = typeof enemyPusherComp | typeof enemyPullerComp;
 export const enemyPullerSystem: EnemySystem = {
 	update: (entity, input) => {
 		const comp = entity.component(enemyPullerComp)!;
-		entity.graphic.color = entity.ready ? 'cyan' : 'white';
+		entity.graphic.color = entity.ready ? 'cyan' : undefined;
 	},
 };

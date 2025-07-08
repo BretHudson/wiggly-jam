@@ -31,23 +31,23 @@ export class Enemy extends WiggleSceneEntity {
 		return super.graphic as Sprite;
 	}
 
-	static createType(c: EnemyComponent) {
-		const e = new Enemy();
+	static createType(c: EnemyComponent, x: number, y: number, color: string) {
+		const e = new Enemy(x, y, color);
 		const comp = e.addComponent(c)!;
 		e.speed = comp.speed;
 		return e;
 	}
 
-	static createPusher() {
-		return this.createType(enemyPusherComp);
+	static createPusher(x: number, y: number) {
+		return Enemy.createType(enemyPusherComp, x, y, '#AA4A44');
 	}
 
-	static createPuller() {
-		return this.createType(enemyPullerComp);
+	static createPuller(x: number, y: number) {
+		return Enemy.createType(enemyPullerComp, x, y, 'blue');
 	}
 
-	constructor(x?: number, y?: number) {
-		const gfx = Sprite.createRect(32, 32, 'white');
+	constructor(x: number, y: number, color: string) {
+		const gfx = Sprite.createRect(32, 32, color);
 		gfx.centerOO();
 		super(x, y, gfx);
 	}

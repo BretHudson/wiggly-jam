@@ -5,7 +5,7 @@ export const enemyPusherComp = Components.createComponent({
 export const enemyPusherSystem = {
     update: (entity, input) => {
         const comp = entity.component(enemyPusherComp);
-        entity.graphic.color = entity.ready ? 'red' : 'white';
+        entity.graphic.color = entity.ready ? 'red' : undefined;
     },
 };
 export const enemyPullerComp = Components.createComponent({
@@ -14,7 +14,7 @@ export const enemyPullerComp = Components.createComponent({
 export const enemyPullerSystem = {
     update: (entity, input) => {
         const comp = entity.component(enemyPullerComp);
-        entity.graphic.color = entity.ready ? 'cyan' : 'white';
+        entity.graphic.color = entity.ready ? 'cyan' : undefined;
     },
 };
 //# sourceMappingURL=enemy-components.js.map
