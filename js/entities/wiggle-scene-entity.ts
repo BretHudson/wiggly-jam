@@ -4,7 +4,7 @@ import { type Random } from 'canvas-lord/util/random';
 import { type WiggleScene } from '~/scenes/wiggle-scene';
 
 export class WiggleSceneEntity extends Entity<WiggleScene> {
-	get random(): Random {
-		return this.scene.random;
+	get staticRandom(): Random {
+		return this.scene.staticRandom;
 	}
 }
