@@ -1,18 +1,7 @@
-import { Keys } from '../canvas-lord/core/input.js';
 import { Sprite } from '../canvas-lord/graphic/index.js';
 import { Vec2 } from '../canvas-lord/math/index.js';
-import * as Components from '../canvas-lord/util/components.js';
-import { WiggleSceneEntity } from './wiggle-scene-entity.js';
-export const enemyComp = Components.createComponent({
-    target: new Vec2(0, 0),
-});
-export const enemySystem = {
-    update: (entity, input) => {
-        if (input.keyCheck(Keys.Space)) {
-            entity.x += 1;
-        }
-    },
-};
+import { enemyPullerComp, enemyPusherComp, } from '../components/enemy-components.js';
+import { WiggleSceneEntity } from '../entities/wiggle-scene-entity.js';
 const approach = (a, target, amount) => {
     const delta = target.sub(a);
     const mag = delta.magnitude;
@@ -23,18 +12,36 @@ const approach = (a, target, amount) => {
 };
 export class Enemy extends WiggleSceneEntity {
     target = new Vec2();
+    ready = false;
+    speed = 0;
+    set graphic(value) {
+        super.graphic = value;
+    }
+    get graphic() {
+        return super.graphic;
+    }
+    static createType(c) {
+        const e = new Enemy();
+        const comp = e.addComponent(c);
+        e.speed = comp.speed;
+        return e;
+    }
+    static createPusher() {
+        return this.createType(enemyPusherComp);
+    }
+    static createPuller() {
+        return this.createType(enemyPullerComp);
+    }
     constructor(x, y) {
-        const gfx = Sprite.createRect(32, 32, 'cyan');
+        const gfx = Sprite.createRect(32, 32, 'white');
         gfx.centerOO();
         super(x, y, gfx);
     }
     update(input) {
-        this.pos = approach(this.pos, this.target, 5);
+        this.pos = approach(this.pos, this.target, this.speed);
+        this.ready = this.pos.equal(this.target);
         if (input.mousePressed(0)) {
-            const mousePos = input.mouse.pos;
-            const { camera } = this.scene;
-            const relativeMousePos = mousePos.add(camera);
-            this.target.set(relativeMousePos);
+            this.target.set(this.scene.cursorPos);
         }
     }
 }
